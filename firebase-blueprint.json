@@ -1,0 +1,73 @@
+{
+  "entities": {
+    "LeaderboardEntry": {
+      "title": "LeaderboardEntry",
+      "description": "Public non-PII global leaderboard entry representing a player's clicker progress.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the player owning this score entry."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Sanitized player display name (1..40 chars, no PII such as email)."
+        },
+        "clicks": {
+          "type": "integer",
+          "description": "Total click count achieved by the player (>= 0)."
+        },
+        "lifetimePoints": {
+          "type": "integer",
+          "description": "Total lifetime points earned across the player's career (>= 0)."
+        },
+        "bestCombo": {
+          "type": "integer",
+          "description": "Highest click combo achieved (>= 0)."
+        },
+        "restartLv": {
+          "type": "integer",
+          "description": "Prestige / Restarts count achieved (>= 0)."
+        },
+        "reactorCode": {
+          "type": "string",
+          "description": "Short reactor tier code such as Mk.I through Mk.V."
+        },
+        "hasVipPass": {
+          "type": "boolean",
+          "description": "Whether the player holds the VIP Omega badge."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when the leaderboard profile was first created."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when the leaderboard score was last synchronized."
+        }
+      },
+      "required": [
+        "userId",
+        "displayName",
+        "clicks",
+        "lifetimePoints",
+        "bestCombo",
+        "restartLv",
+        "reactorCode",
+        "hasVipPass",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/leaderboard/{userId}": {
+      "schema": {
+        "$ref": "#/entities/LeaderboardEntry"
+      },
+      "description": "Global leaderboard scores keyed by authenticated Firebase user UID. Readable by signed-in players; writable only by the owner UID."
+    }
+  }
+}
